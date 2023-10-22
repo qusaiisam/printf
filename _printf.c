@@ -1,47 +1,33 @@
 #include "main.h"
 
 /**
- * _printf - implementation of the inbuilt printf
- * @format: the format specifier
- * Return: the formated string
-*/
+ *  * _printf - implementation of the inbuilt printf
+ *   * @format: the format specifier
+ *    * Return: the formated string
+ *     */
 
 int _printf(const char *format, ...)
 {
+	int printed = 0;
+
 	va_list args;
 
 	va_start(args, format);
 
-	int printed = 0, char *p = format;
-
-	while (*p != '\0')
+	while (*format != '\0')
 	{
-		if (*p != '%')
-		{
-			_putchar(*p);
-			printed++;
+			if (*format == '%')
+			{
+						format++;
+						printed = handle(format, args, printed);
+						format++;
+					}
+			else
+			{
+						_putchar(*format);
+						printed++;
+						format++;
+					}
 		}
-		else
-		{
-			if (*p == 'c')
-			{
-				_putchar(va_arg(args, int));
-				printed++;
-			}
-			else if (*p == 's')
-			{
-				printed = printf_string(args, printed);
-				printed++;
-				}
-			}
-			else if (*p == '%')
-			{
-				_putchar('%');
-				printed++;
-			}
-		}
-	p++;
-	}
 	va_end(args);
-	return (printed);
-}
+	return (printed);}
